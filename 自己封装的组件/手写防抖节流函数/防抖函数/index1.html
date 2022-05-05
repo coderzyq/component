@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>防抖函数</title>
+    <style>
+        .search {
+            height: 30px;
+            width: 500px;
+            top: 100px;
+            left: 100px;
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+<div class="search">
+    <input type="text">
+    <button id="cancel">取消</button>
+</div>
+
+<!--<script src="https://cdn.jsdelivr.net/npm/underscore@1.13.3/underscore-umd-min.js"></script>-->
+<script src="./src/debounce.js"></script>
+<script>
+const inputEl = document.querySelector('input')
+let counter = 0
+//
+const inputChange = function (event) {
+    console.log(`发送了第${++counter}次网络求情`, this, event)
+    return 'aaa'
+}
+
+//防抖操作
+// inputEl.oninput = _.debounce(inputChange, 2000)
+// inputEl.oninput = debounce(inputChange, 2000, true)
+const debounceChange = debounce(inputChange, 2000, false, (res) => {
+    console.log('拿到真正执行函数的返回值：', res)
+})
+
+const tempCallback = () => {
+    debounceChange().then(res => {
+        console.log('Promise的返回值结果', res)
+    })
+}
+inputEl.oninput = tempCallback
+
+//节流操作
+// inputEl.oninput = _.throttle(inputChange, 2000)
+//取消功能
+const btn = document.querySelector('#cancel')
+btn.onclick = function () {
+    debounceChange.cancel()
+}
+</script>
+</body>
+</html>
