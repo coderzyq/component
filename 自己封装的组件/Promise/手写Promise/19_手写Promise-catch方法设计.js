@@ -1,20 +1,20 @@
 // ES6 ES2015
 // https://promisesaplus.com/
-const PROMISE_STATUS_PENDING ='pending'
-const PROMISE_STATUS_FULFILLED ='fulfilled'
-const PROMISE_STATUS_REJECTED ='rejected'
+const PROMISE_STATUS_PENDING = 'pending'
+const PROMISE_STATUS_FULFILLED = 'fulfilled'
+const PROMISE_STATUS_REJECTED = 'rejected'
 
-//工具函数
+// 工具函数
 function execFunctionWithCatchError(execFn, value, resolve, reject) {
   try {
     const result = execFn(value)
     resolve(result)
-  } catch (err) {
+  } catch(err) {
     reject(err)
   }
 }
 
-class YQPromise {
+class HYPromise {
   constructor(executor) {
     this.status = PROMISE_STATUS_PENDING
     this.value = undefined
@@ -24,28 +24,25 @@ class YQPromise {
 
     const resolve = (value) => {
       if (this.status === PROMISE_STATUS_PENDING) {
+        // 添加微任务
         queueMicrotask(() => {
           if (this.status !== PROMISE_STATUS_PENDING) return
           this.status = PROMISE_STATUS_FULFILLED
           this.value = value
-          // console.log('resolve被调用')
-          // this.onFulfilled(this.value)
-          //遍历获取的所有的函数
           this.onFulfilledFns.forEach(fn => {
             fn(this.value)
           })
-        })
+        });
       }
     }
 
     const reject = (reason) => {
       if (this.status === PROMISE_STATUS_PENDING) {
+        // 添加微任务
         queueMicrotask(() => {
           if (this.status !== PROMISE_STATUS_PENDING) return
           this.status = PROMISE_STATUS_REJECTED
           this.reason = reason
-          console.log('reject被调用')
-          // this.onRejected(this.reason)
           this.onRejectedFns.forEach(fn => {
             fn(this.reason)
           })
@@ -61,71 +58,54 @@ class YQPromise {
   }
 
   then(onFulfilled, onRejected) {
-    return new YQPromise((resolve, reject) => {
-      //如果在then调用的时候，状态已经确定下来
+    const defaultOnRejected = err => { throw err }
+    onRejected = onRejected || defaultOnRejected
+
+    return new HYPromise((resolve, reject) => {
+      // 1.如果在then调用的时候, 状态已经确定下来
       if (this.status === PROMISE_STATUS_FULFILLED && onFulfilled) {
-        // try {
-        //   const value = onFulfilled(this.value)
-        //   resolve(value)
-        // } catch (err) {
-        //   reject(err)
-        // }
         execFunctionWithCatchError(onFulfilled, this.value, resolve, reject)
       }
       if (this.status === PROMISE_STATUS_REJECTED && onRejected) {
-        // try {
-        //   const reason = onRejected(this.reason)
-        //   resolve(reason)
-        // } catch (err) {
-        //   reject(err)
-        // }
         execFunctionWithCatchError(onRejected, this.reason, resolve, reject)
       }
-      if (this.status === PROMISE_STATUS_PENDING) {
-        //将成功回调和失败回调放入到数组中
-        if (onFulfilled === null || onRejected === null) throw new Error('onFulfilled or onRejected is null')
-        this.onFulfilledFns.push(() => {
-          // try {
-          //   const value = onFulfilled(this.value)
-          //   resolve(value)
-          // } catch (err) {
-          //   reject(err)
-          // }
 
+      // 2.将成功回调和失败的回调放到数组中
+      if (this.status === PROMISE_STATUS_PENDING) {
+        if (onFulfilled) this.onFulfilledFns.push(() => {
           execFunctionWithCatchError(onFulfilled, this.value, resolve, reject)
         })
-        this.onRejectedFns.push(() => {
-          // try {
-          //   const reason = onRejected(this.reason)
-          //   resolve(reason)
-          // } catch (err) {
-          //   reject(err)
-          // }
-
+        if (onRejected) this.onRejectedFns.push(() => {
           execFunctionWithCatchError(onRejected, this.reason, resolve, reject)
         })
       }
     })
   }
 
+  catch(onRejected) {
+    return this.then(undefined, onRejected)
+  }
 
-
+  finally(onFinally) {
+    this.then(() => {
+      onFinally()
+    }, () => {
+      onFinally()
+    })
+  }
 }
 
-const promise = new YQPromise((resolve, reject) => {
+const promise = new HYPromise((resolve, reject) => {
   console.log("状态pending")
   // resolve(1111) // resolved/fulfilled
   reject(2222)
 })
 
-
+// 调用then方法多次调用
 promise.then(res => {
-  console.log("res: ", res)
-  return 'aaa'
-}, err => {
-  console.log('err: ', err)
-}).then(res => {
-  console.log('res2: ', res)
-}, err => {
-  console.log('err2: ', err)
+  console.log("res:", res)
+}).catch(err => {
+  console.log("err:", err)
+}).finally(() => {
+  console.log('finally')
 })
