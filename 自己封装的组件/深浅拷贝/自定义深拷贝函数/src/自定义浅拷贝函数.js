@@ -17,7 +17,6 @@ const obj = {
 }
 
 const newObj = deepClone(obj)
-
 console.log(newObj === obj)
 obj.friend.name = 'lebron'
 console.log(newObj)
