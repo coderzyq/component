@@ -1,14 +1,14 @@
 // 创建多个Promise
 const p1 = new Promise((resolve, reject) => {
   setTimeout(() => {
-    resolve(11111)
+    // resolve(11111)
     reject(1111)
   }, 1000);
 })
 
 const p2 = new Promise((resolve, reject) => {
   setTimeout(() => {
-    resolve(222)
+    // resolve(222)
     reject(22222)
   }, 500);
 })

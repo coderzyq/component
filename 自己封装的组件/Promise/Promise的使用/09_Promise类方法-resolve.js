@@ -14,7 +14,8 @@
 // 类方法 Promise.resolve
 // 1.普通的值
 // const promise = Promise.resolve({name: 'zyq'})
-//相当于
+const promise = Promise.resolve({name: 'coderzyq'})
+// 相当于
 // const promise2 = new Promise((resolve) => {
 //   resolve({name: 'zyq'})
 // })

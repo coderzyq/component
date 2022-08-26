@@ -33,15 +33,15 @@ const promise = new Promise((resolve, reject) => {
 // })
 
 // 2> 如果我们返回的是一个Promise
-promise.then(res => {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      resolve(111111)
-    }, 3000)
-  })
-}).then(res => {
-  console.log("res:", res)
-})
+// promise.then(res => {
+//   return new Promise((resolve, reject) => {
+//     setTimeout(() => {
+//       resolve(111111)
+//     }, 3000)
+//   })
+// }).then(res => {
+//   console.log("res:", res)
+// })
 
 // 3> 如果返回的是一个对象, 并且该对象实现了thenable
 // promise.then(res => {
@@ -53,3 +53,12 @@ promise.then(res => {
 // }).then(res => {
 //   console.log("res:", res)
 // })
+promise.then(res => {
+  return {
+    then: function(resolve, reject) {
+      resolve(2222)
+    }
+  }
+}).then(res => {
+  console.log(res);
+})

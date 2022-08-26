@@ -62,6 +62,9 @@ class YQPromise {
       this.onFulfilledFns.push(onFulfilled)
       this.onRejectedFns.push(onRejected)
     }
+    return new HYPromise((resolve, reject) => {
+      resolve(5555)
+    })
 
   }
 
@@ -80,6 +83,10 @@ promise.then(res => {
   console.log("res: ", res)
 }, err => {
   console.log('err: ', err)
+}).then(res => {
+  console.log('result', res);
+}, err => {
+  console.log('error: ', err);
 })
 
 promise.then( res => {

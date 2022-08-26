@@ -1,5 +1,5 @@
 const promise = new Promise((resolve, reject) => {
-  // resolve('resolve message')
+  resolve('resolve message')
   reject('reject message')
 })
 

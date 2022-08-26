@@ -2,7 +2,7 @@
 const p1 = new Promise((resolve, reject) => {
   setTimeout(() => {
     resolve(11111)
-    // reject(111111)
+    reject(111111)
   }, 1000);
 })
 

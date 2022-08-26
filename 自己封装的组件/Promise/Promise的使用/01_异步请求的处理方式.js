@@ -5,13 +5,12 @@
  */
 
 //request.js
-function requestData(url, successCallback, failtureCallback) {
+function requestData(url ,successCallback, failtureCallback) {
   //模拟网络请求
   setTimeout(() => {
     //拿到请求的结果
     //url传入的是coderzyq，请求成功
     if (url === 'coderzyq') {
-      //成功
       let names = ['abc', 'cba', 'nba']
       successCallback(names)
     } else {

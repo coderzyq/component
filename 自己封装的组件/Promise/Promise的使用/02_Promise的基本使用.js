@@ -1,8 +1,8 @@
 function foo() {
   //Promise
   return new Promise((resolve, reject) => {
-    resolve('success message')
-    // reject('failure message')
+    // resolve('success message')
+    reject('failure message')
   })
 }
 
@@ -42,11 +42,11 @@ fooPromise.catch(() => {
 
 
 // 钩子函数: hook
-function foo(fn) {
-  fn()
-}
+// function foo(fn) {
+//   fn()
+// }
 
-foo(() => {
+// foo(() => {
 
-})
+// })
 

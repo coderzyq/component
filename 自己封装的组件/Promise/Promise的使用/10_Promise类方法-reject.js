@@ -9,9 +9,11 @@ const promise = Promise.reject(new Promise((resolve) => {resolve('111')}))
 // const promise = Promise.resolve(new Promise((resolve) => {resolve('111')}))
 //不执行then和catch
 // const promise = Promise.resolve(new Promise(() => {}))
-// const promise = Promise.reject(new Promise(() => {}))
+// const promise = Promise.reject(new Promise((resolve, reject) => { reject('reject message')}))
 promise.then(res => {
   console.log('res: ', res)
+  console.log(typeof res);
 }).catch(err => {
   console.log('err: ', err)
+  console.log(typeof err);
 })

@@ -16,17 +16,17 @@ const promise = new Promise((resolve, reject) => {
 // promise.catch(err => {
 //   console.log("err:", err)
 // })
-promise.then(res => {
-  return new Promise((resolve, reject) => {
-    reject("then rejected status")
-    // resolve("then resolve status")
-  })
-  throw new Error("error message")
-}).then(res => {
-  console.log('res1:', res)
-}).catch(err => {
-  console.log("err2:", err)
-})
+// promise.then(res => {
+//   return new Promise((resolve, reject) => {
+//     reject("then rejected status")
+//     // resolve("then resolve status")
+//   })
+//   throw new Error("error message")
+// }).then(res => {
+//   console.log('res1:', res)
+// }).catch(err => {
+//   console.log("err2:", err)
+// })
 
 
 // 3.拒绝捕获的问题(前面课程)

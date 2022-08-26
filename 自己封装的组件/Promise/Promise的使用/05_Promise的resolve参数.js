@@ -10,17 +10,19 @@
 
 // 1.传入Promise的特殊情况
 // const newPromise = new Promise((resolve, reject) => {
-//   // resolve("aaaaaa")
+//   // resolve('QQQQQ')
 //   reject("err message")
+//   console.log("++++++++++");
 // })
 
 // new Promise((resolve, reject) => {
-//   // pending -> fulfilled
 //   resolve(newPromise)
+//   reject(newPromise)
+//   console.log("object");
 // }).then(res => {
-//   console.log("res:", res)
-// }, err => {
-//   console.log("err:", err)
+//   console.log("res: ", res);
+// }).catch(err => {
+//   console.log("err: ", err);
 // })
 
 // 2.传入一个对象, 这个兑现有then方法
@@ -39,12 +41,12 @@ new Promise((resolve, reject) => {
   console.log("err:", err)
 })
 
-// eatable/runable
-const obj = {
-  eat: function() {
+// // eatable/runable
+// const obj = {
+//   eat: function() {
 
-  },
-  run: function() {
+//   },
+//   run: function() {
 
-  }
-}
+//   }
+// }
