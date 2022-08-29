@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>节流函数</title>
+    <style>
+        .search {
+            height: 500px;
+            width: 500px;
+            top: 100px;
+            left: 100px;
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+<div class="search">
+    <input type="text">
+    <button id="'cancel">取消</button>
+</div>
+<script src="./src/throttle copy.js"></script>
+<script>
+    const inputEl = document.querySelector('.search')
+    let count = 0
+    const inputChange = function (event) {
+        console.log(`发送了第${++count}次网络请求`, this, event);
+    }
+    //节流操作
+    const throttleChange = throttle(inputChange, 2000, {leading: true, trailing: true})
+    inputEl.oninput = throttleChange
+</script>
+</body>
+</html>
