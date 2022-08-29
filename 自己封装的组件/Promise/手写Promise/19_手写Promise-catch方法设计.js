@@ -29,6 +29,7 @@ class HYPromise {
           if (this.status !== PROMISE_STATUS_PENDING) return
           this.status = PROMISE_STATUS_FULFILLED
           this.value = value
+          console.log('aaaa被调用');
           this.onFulfilledFns.forEach(fn => {
             fn(this.value)
           })
@@ -42,6 +43,7 @@ class HYPromise {
         queueMicrotask(() => {
           if (this.status !== PROMISE_STATUS_PENDING) return
           this.status = PROMISE_STATUS_REJECTED
+          console.log('bbbbbb');
           this.reason = reason
           this.onRejectedFns.forEach(fn => {
             fn(this.reason)
@@ -99,6 +101,7 @@ const promise = new HYPromise((resolve, reject) => {
   console.log("状态pending")
   // resolve(1111) // resolved/fulfilled
   reject(2222)
+  
 })
 
 // 调用then方法多次调用

@@ -124,6 +124,7 @@ promise.then(res => {
   return 'aaa'
 }, err => {
   console.log('err: ', err)
+  return 'bbb'
 }).then(res => {
   console.log('res2: ', res)
 }, err => {
